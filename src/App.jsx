@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useState} from 'react'
+import ListeProfils from './ListeProfils';
+import FormulaireProfil from './FormulaireProfile';
 
 function App() {
-  const [count, setCount] = useState(0)
 
+    const [profils, setProfils] = useState([{
+      nom: 'Alice',
+      age: 25,
+      profession: 'Développeuse',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS6QXl26LDglTrtcs263_rB3xFZhHgIumu_2OzxcSEdA&s', // URL externe
+    },
+    {
+      nom: 'Bob',
+      age: 30,
+      profession: 'Designer',
+      image: 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png', // image locale placée dans public/images
+    },
+    {
+      nom: 'Charlie',
+      age: 28,
+      profession: 'Ingénieur IA',
+      image: 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png', // une autre image externe
+    }]) ;
+
+    const ajouterProfil = (profil) => {
+        setProfils([...profils, profil])
+    }
+
+    const supprimerProfil = (index) => {
+
+      setProfils(profils.filter((_, i)=> i !== index))
+    }
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <h1 className="text-center my-4">Liste des Profils</h1>
+      <ListeProfils profils={profils} supprimerProfil={supprimerProfil}/>
+      
+      <FormulaireProfil ajouterProfil={ajouterProfil} />
+    </div>
+  );
 }
 
-export default App
+export default App;
